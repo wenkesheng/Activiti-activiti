@@ -148,15 +148,16 @@ public class ProcessInstanceDetailPanel extends DetailPanel {
 
     // Only show when graphical notation is defined
     if (processDefinitionEntity != null && processDefinitionEntity.isGraphicalNotationDefined()) {
+      StreamResource diagram = new ProcessDefinitionImageStreamResourceBuilder()
+        .buildStreamResource(processInstance, repositoryService, runtimeService);
+
+      if(diagram != null) {
       Label header = new Label(i18nManager.getMessage(Messages.PROCESS_HEADER_DIAGRAM));
       header.addStyleName(ExplorerLayout.STYLE_H3);
       header.addStyleName(ExplorerLayout.STYLE_DETAIL_BLOCK);
       header.addStyleName(ExplorerLayout.STYLE_NO_LINE);
       panelLayout.addComponent(header);
       
-      StreamResource diagram = new ProcessDefinitionImageStreamResourceBuilder()
-        .buildStreamResource(processInstance, repositoryService, runtimeService);
-
       Embedded embedded = new Embedded(null, diagram);
       embedded.setType(Embedded.TYPE_IMAGE);
       embedded.setSizeUndefined();
@@ -173,6 +174,7 @@ public class ProcessInstanceDetailPanel extends DetailPanel {
       imagePanel.addComponent(embedded);
       
       panelLayout.addComponent(imagePanel);
+      }
     }
   }
 
