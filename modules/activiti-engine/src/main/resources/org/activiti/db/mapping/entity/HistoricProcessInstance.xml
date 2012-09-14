@@ -118,6 +118,9 @@
   
   <sql id="selectHistoricProcessInstancesByQueryCriteriaSql">
     from ${prefix}ACT_HI_PROCINST HPI
+    <if test="processKeyNotIn != null || processDefinitionKey != null">
+    	inner join ${prefix}ACT_RE_PROCDEF DEF on HPI.PROC_DEF_ID_ = DEF.ID_
+    </if>
     <where>
       <if test="processInstanceId != null">
         HPI.PROC_INST_ID_ = #{processInstanceId}
@@ -163,7 +166,29 @@
       <if test="superProcessInstanceId != null">
         and HPI.SUPER_PROCESS_INSTANCE_ID_ = #{superProcessInstanceId}
       </if>
-       <foreach collection="variables" index="index" item="var">
+         <if test="startedBefore != null">
+        and HPI.START_TIME_ &lt;= #{startedBefore}
+      </if>
+      <if test="startedAfter != null">
+        and HPI.START_TIME_ &gt;= #{startedAfter}
+      </if>
+      <if test="finishedBefore != null">
+        and HPI.END_TIME_ &lt;= #{finishedBefore}
+      </if>
+      <if test="finishedAfter != null">
+        and HPI.END_TIME_ &gt;= #{finishedAfter}
+      </if>
+      <if test="processDefinitionKey != null">
+      		and DEF.KEY_ = #{processDefinitionKey}
+      </if>
+      <if test="processKeyNotIn != null">
+      	<foreach collection="processKeyNotIn" index="index" item="procDefKey">
+	   		and DEF.KEY_ not like #{procDefKey}
+	  	</foreach>
+      </if>
+      
+      <!-- Variables -->
+      <foreach collection="queryVariableValues" index="index" item="var">
         and exists (
           select HD.ID_ 
           from ${prefix}ACT_HI_DETAIL HD 
@@ -179,16 +204,30 @@
             </if>
             <!-- Variable value -->
             <if test="var.textValue != null &amp;&amp; var.longValue == null &amp;&amp; var.doubleValue == null">
-              and HD.TEXT_ =  #{var.textValue}
+              and HD.TEXT_ 
+              <choose>
+	            <when test="var.operator.equals('LIKE')">LIKE</when>
+	            <otherwise><include refid="executionVariableOperator" /></otherwise>
+	          </choose>
+               #{var.textValue}
             </if>
             <if test="var.textValue2 != null">
-              and HD.TEXT2_ = #{var.textValue2}
+              and HD.TEXT2_
+              <choose>
+	            <when test="var.operator.equals('LIKE')">LIKE</when>
+	            <otherwise><include refid="executionVariableOperator" /></otherwise>
+	          </choose>               
+               #{var.textValue2}
             </if>
             <if test="var.longValue != null">
-              and HD.LONG_ = #{var.longValue}
+              and HD.LONG_
+              <include refid="executionVariableOperator" /> 
+               #{var.longValue}
             </if>
             <if test="var.doubleValue != null">
-              and HD.DOUBLE_ = #{var.doubleValue}
+              and HD.DOUBLE_
+              <include refid="executionVariableOperator" /> 
+               #{var.doubleValue}
             </if>
             <!-- Null variable type -->
             <if test="var.textValue == null &amp;&amp; var.textValue2 == null &amp;&amp; var.longValue == null &amp;&amp; var.doubleValue == null">
@@ -197,6 +236,17 @@
         )
       </foreach>      
     </where>
+  </sql>
+
+  <sql id="executionVariableOperator">
+    <choose>
+   	  <when test="var.operator.equals('EQUALS')">=</when>
+   	  <when test="var.operator.equals('NOT_EQUALS')">&lt;&gt;</when>
+   	  <when test="var.operator.equals('GREATER_THAN')">&gt;</when>
+   	  <when test="var.operator.equals('GREATER_THAN_OR_EQUAL')">&gt;=</when>
+   	  <when test="var.operator.equals('LESS_THAN')">&lt;</when>
+   	  <when test="var.operator.equals('LESS_THAN_OR_EQUAL')">&lt;=</when>
+   </choose>
   </sql>
 
 </mapper>

@@ -13,7 +13,6 @@
 
 package org.activiti.engine.impl;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +31,7 @@ import org.activiti.engine.impl.variable.VariableTypes;
  * @author Tom Baeyens
  * @author Falko Menge
  */
-public class HistoricProcessInstanceQueryImpl extends AbstractQuery<HistoricProcessInstanceQuery, HistoricProcessInstance> implements HistoricProcessInstanceQuery {
+public class HistoricProcessInstanceQueryImpl extends ExecutionVariableQueryImpl<HistoricProcessInstanceQuery, HistoricProcessInstance> implements HistoricProcessInstanceQuery {
 
   private static final long serialVersionUID = 1L;
   protected String processInstanceId;
@@ -42,18 +41,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractQuery<HistoricProc
   protected boolean unfinished = false;
   protected String startedBy;
   protected String superProcessInstanceId;
+  protected List<String> processKeyNotIn;
+  protected Date startedBefore;
+  protected Date startedAfter;
+  protected Date finishedBefore;
+  protected Date finishedAfter;
   protected String processDefinitionKey;
   protected Set<String> processInstanceIds;
-  protected Date startDateBy;
-  protected Date startDateOn;
-  protected Date finishDateBy;
-  protected Date finishDateOn;
-  protected Date startDateOnBegin;
-  protected Date startDateOnEnd;
-  protected Date finishDateOnBegin;
-  protected Date finishDateOnEnd;
-  protected List<QueryVariableValue> variables = new ArrayList<QueryVariableValue>();
-  
+   
   public HistoricProcessInstanceQueryImpl() {
   }
   
@@ -111,65 +106,38 @@ public class HistoricProcessInstanceQueryImpl extends AbstractQuery<HistoricProc
     return this;
   }
   
+  public HistoricProcessInstanceQuery processDefinitionKeyNotIn(List<String> processDefinitionKeys) {
+    this.processKeyNotIn = processDefinitionKeys;
+    return this;
+  }
+  
+  public HistoricProcessInstanceQuery startedAfter(Date date) {
+    startedAfter = date;
+    return this;
+  }
+  
+  public HistoricProcessInstanceQuery startedBefore(Date date) {
+    startedBefore = date;
+    return this;
+  }
+  
+  public HistoricProcessInstanceQuery finishedAfter(Date date) {
+    finishedAfter = date;
+    finished = true;
+    return this;
+  }
+  
+  public HistoricProcessInstanceQuery finishedBefore(Date date) {
+    finishedBefore = date;
+    finished = true;
+    return this;
+  }
+  
   public HistoricProcessInstanceQuery superProcessInstanceId(String superProcessInstanceId) {
 	 this.superProcessInstanceId = superProcessInstanceId;
 	 return this;
   }
   
-	public HistoricProcessInstanceQuery startDateBy(Date date) {
-		this.startDateBy = this.calculateMidnight(date);;
-		return this;
-	}
-
-	public HistoricProcessInstanceQuery startDateOn(Date date) {
-		this.startDateOn = date;
-		this.startDateOnBegin = this.calculateMidnight(date);
-		this.startDateOnEnd = this.calculateBeforeMidnight(date);
-		return this;
-	}
-
-	public HistoricProcessInstanceQuery finishDateBy(Date date) {
-		this.finishDateBy = this.calculateBeforeMidnight(date);
-		return this;
-	}
-
-	public HistoricProcessInstanceQuery finishDateOn(Date date) {
-		this.finishDateOn = date;
-		this.finishDateOnBegin = this.calculateMidnight(date);
-		this.finishDateOnEnd = this.calculateBeforeMidnight(date);
-		return this;
-	}
-	
-	private Date calculateBeforeMidnight(Date date){
-	  Calendar cal = Calendar.getInstance();
-	  cal.setTime(date);
-	  cal.add(Calendar.DAY_OF_MONTH, 1);
-	  cal.add(Calendar.SECOND, -1);		
-		return cal.getTime();
-	}
-	
-	private Date calculateMidnight(Date date){
-	  Calendar cal = Calendar.getInstance();
-	  cal.setTime(date);
-	  cal.set(Calendar.MILLISECOND, 0);
-	  cal.set(Calendar.SECOND, 0);
-	  cal.set(Calendar.MINUTE, 0);
-	  cal.set(Calendar.HOUR, 0);	  
-		return cal.getTime();
-	}
-	
-	/* public HistoricProcessInstanceQuery processVariableEquals(String variableName, Object variableValue) {
-		variables.add(new QueryVariableValue(variableName, variableValue, QueryOperator.EQUALS));
-		return this;
-	} */
-	
-	protected void ensureVariablesInitialized() {    
-	  VariableTypes types = Context.getProcessEngineConfiguration().getVariableTypes();
-	  for(QueryVariableValue var : variables) {
-	    var.initialize(types);
-	  }
-	}
-
 	public HistoricProcessInstanceQuery orderByProcessInstanceBusinessKey() {
     return orderBy(HistoricProcessInstanceQueryProperty.BUSINESS_KEY);
   }
@@ -235,10 +203,92 @@ public class HistoricProcessInstanceQueryImpl extends AbstractQuery<HistoricProc
     return startedBy;
   }
   public String getSuperProcessInstanceId() {
-	return superProcessInstanceId;
+    return superProcessInstanceId;
   }
   public void setSuperProcessInstanceId(String superProcessInstanceId) {
-	this.superProcessInstanceId = superProcessInstanceId;
+    this.superProcessInstanceId = superProcessInstanceId;
   }
   
+  public List<String> getProcessKeyNotIn() {
+    return processKeyNotIn;
+  }
+  public Date getStartedAfter() {
+    return startedAfter;
+  }
+  public Date getStartedBefore() {
+    return startedBefore;
+  }
+  public Date getFinishedAfter() {
+    return finishedAfter;
+  }
+  public Date getFinishedBefore() {
+    return finishedBefore;
+  }
+ 
+  
+ // below is deprecated and to be removed in 5.12
+  
+  protected void ensureVariablesInitialized() {    
+    VariableTypes types = Context.getProcessEngineConfiguration().getVariableTypes();
+    for(QueryVariableValue var : queryVariableValues) {
+      var.initialize(types);
+    }
+  }
+
+  protected Date startDateBy;
+  protected Date startDateOn;
+  protected Date finishDateBy;
+  protected Date finishDateOn;
+  protected Date startDateOnBegin;
+  protected Date startDateOnEnd;
+  protected Date finishDateOnBegin;
+  protected Date finishDateOnEnd;
+
+  @Deprecated
+  public HistoricProcessInstanceQuery startDateBy(Date date) {
+    this.startDateBy = this.calculateMidnight(date);;
+    return this;
+  }
+
+  @Deprecated
+  public HistoricProcessInstanceQuery startDateOn(Date date) {
+    this.startDateOn = date;
+    this.startDateOnBegin = this.calculateMidnight(date);
+    this.startDateOnEnd = this.calculateBeforeMidnight(date);
+    return this;
+  }
+
+  @Deprecated
+  public HistoricProcessInstanceQuery finishDateBy(Date date) {
+    this.finishDateBy = this.calculateBeforeMidnight(date);
+    return this;
+  }
+
+  @Deprecated
+  public HistoricProcessInstanceQuery finishDateOn(Date date) {
+    this.finishDateOn = date;
+    this.finishDateOnBegin = this.calculateMidnight(date);
+    this.finishDateOnEnd = this.calculateBeforeMidnight(date);
+    return this;
+  }
+  
+  @Deprecated
+  private Date calculateBeforeMidnight(Date date){
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    cal.add(Calendar.DAY_OF_MONTH, 1);
+    cal.add(Calendar.SECOND, -1);   
+    return cal.getTime();
+  }
+  
+  @Deprecated
+  private Date calculateMidnight(Date date){
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    cal.set(Calendar.MILLISECOND, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.HOUR, 0);    
+    return cal.getTime();
+  }
 }
