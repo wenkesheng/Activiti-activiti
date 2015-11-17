@@ -515,7 +515,7 @@
         <!-- Variable value -->
         <if test="var.textValue != null &amp;&amp; var.longValue == null &amp;&amp; var.doubleValue == null">
           <choose>
-            <when test="var.operator.equals('EQUALS_IGNORE_CASE') || var.operator.equals('NOT_EQUALS_IGNORE_CASE')">
+            <when test="var.operator.equals('EQUALS_IGNORE_CASE') || var.operator.equals('NOT_EQUALS_IGNORE_CASE') || var.operator.equals('LIKE_IGNORE_CASE')">
               and lower(A${index}.TEXT_)
             </when>
             <otherwise>
@@ -523,7 +523,7 @@
             </otherwise>
           </choose> 
           <choose>
-              <when test="var.operator.equals('LIKE')">LIKE</when>
+              <when test="var.operator.equals('LIKE') || var.operator.equals('LIKE_IGNORE_CASE')">LIKE</when>
               <otherwise><include refid="executionVariableOperator" /></otherwise>
           </choose>          
           #{var.textValue}
@@ -798,7 +798,7 @@
               <!-- Variable value -->
               <if test="var.textValue != null &amp;&amp; var.longValue == null &amp;&amp; var.doubleValue == null">
                 <choose>
-                  <when test="var.operator.equals('EQUALS_IGNORE_CASE') || var.operator.equals('NOT_EQUALS_IGNORE_CASE')">
+                  <when test="var.operator.equals('EQUALS_IGNORE_CASE') || var.operator.equals('NOT_EQUALS_IGNORE_CASE') || var.operator.equals('LIKE_IGNORE_CASE')">
                     and lower(A_OR${index}.TEXT_)
                   </when>
                   <otherwise>
@@ -806,7 +806,7 @@
                   </otherwise>
                 </choose> 
                 <choose>
-                    <when test="var.operator.equals('LIKE')">LIKE</when>
+                    <when test="var.operator.equals('LIKE') || var.operator.equals('LIKE_IGNORE_CASE')">LIKE</when>
                     <otherwise><include refid="executionVariableOperator" /></otherwise>
                 </choose>          
                 #{var.textValue}

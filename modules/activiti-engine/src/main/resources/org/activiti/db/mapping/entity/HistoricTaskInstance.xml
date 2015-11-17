@@ -507,7 +507,7 @@
         <!-- Variable value -->
         <if test="queryVar.textValue != null &amp;&amp; queryVar.longValue == null &amp;&amp; queryVar.doubleValue == null">
           <choose>
-            <when test="queryVar.operator.equals('EQUALS_IGNORE_CASE') || queryVar.operator.equals('NOT_EQUALS_IGNORE_CASE')">
+            <when test="queryVar.operator.equals('EQUALS_IGNORE_CASE') || queryVar.operator.equals('NOT_EQUALS_IGNORE_CASE') || queryVar.operator.equals('LIKE_IGNORE_CASE')">
               and lower(A${index}.TEXT_)
             </when>
             <otherwise>
@@ -515,7 +515,7 @@
             </otherwise>
           </choose> 
           <choose>
-              <when test="queryVar.operator.equals('LIKE')">LIKE</when>
+              <when test="queryVar.operator.equals('LIKE') || queryVar.operator.equals('LIKE_IGNORE_CASE')">LIKE</when>
               <otherwise><include refid="executionVariableOperator" /></otherwise>
           </choose>          
           #{queryVar.textValue}
@@ -771,7 +771,7 @@
               <!-- Variable value -->
               <if test="queryVar.textValue != null &amp;&amp; queryVar.longValue == null &amp;&amp; queryVar.doubleValue == null">
                 <choose>
-                  <when test="queryVar.operator.equals('EQUALS_IGNORE_CASE') || queryVar.operator.equals('NOT_EQUALS_IGNORE_CASE')">
+                  <when test="queryVar.operator.equals('EQUALS_IGNORE_CASE') || queryVar.operator.equals('NOT_EQUALS_IGNORE_CASE') || queryVar.operator.equals('LIKE_IGNORE_CASE')">
                     and lower(A_OR${index}.TEXT_)
                   </when>
                   <otherwise>
@@ -779,7 +779,7 @@
                   </otherwise>
                 </choose> 
                 <choose>
-                    <when test="queryVar.operator.equals('LIKE')">LIKE</when>
+                    <when test="queryVar.operator.equals('LIKE') || queryVar.operator.equals('LIKE_IGNORE_CASE')">LIKE</when>
                     <otherwise><include refid="executionVariableOperator" /></otherwise>
                 </choose>          
                 #{queryVar.textValue}

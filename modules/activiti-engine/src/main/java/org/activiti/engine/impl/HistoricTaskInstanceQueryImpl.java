@@ -22,7 +22,6 @@ import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.identity.Group;
-import org.activiti.engine.impl.AbstractQuery.NullHandlingOnOrder;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.interceptor.CommandContext;
 import org.activiti.engine.impl.interceptor.CommandExecutor;
@@ -567,6 +566,15 @@ public class HistoricTaskInstanceQueryImpl extends AbstractVariableQueryImpl<His
       return variableValueLike(name, value);
     }
   }
+  
+  public HistoricTaskInstanceQuery taskVariableValueLikeIgnoreCase(String name, String value) {
+    if (inOrStatement) {
+      orQueryObject.variableValueLikeIgnoreCase(name, value, true);
+      return this;
+    } else {
+      return variableValueLikeIgnoreCase(name, value, true);
+    }
+  }
 
   public HistoricTaskInstanceQuery processVariableValueEquals(String variableName, Object variableValue) {
     if (inOrStatement) {
@@ -655,6 +663,15 @@ public class HistoricTaskInstanceQueryImpl extends AbstractVariableQueryImpl<His
       return this;
     } else {
       return variableValueLike(name, value, false);
+    }
+  }
+  
+  public HistoricTaskInstanceQuery processVariableValueLikeIgnoreCase(String name, String value) {
+    if (inOrStatement) {
+      orQueryObject.variableValueLikeIgnoreCase(name, value, false);
+      return this;
+    } else {
+      return variableValueLikeIgnoreCase(name, value, false);
     }
   }
   

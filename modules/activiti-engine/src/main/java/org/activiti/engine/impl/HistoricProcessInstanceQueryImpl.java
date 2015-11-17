@@ -436,7 +436,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   @Override
   public HistoricProcessInstanceQuery variableValueLikeIgnoreCase(String name, String value) {
     if (inOrStatement) {
-      currentOrQueryObject.variableValueLikeIgnoreCase(name, value, true);
+      orQueryObject.variableValueLikeIgnoreCase(name, value, true);
       return this;
     } else {
       return variableValueLikeIgnoreCase(name, value, true);
