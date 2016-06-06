@@ -407,6 +407,11 @@ public interface HistoricTaskInstanceQuery  extends Query<HistoricTaskInstanceQu
    */
   HistoricTaskInstanceQuery includeProcessVariables();
   
+  /**
+   * Limit task variables
+   */
+  HistoricTaskInstanceQuery limitTaskVariables(Integer taskVariablesLimit);
+  
   /** Order by task id (needs to be followed by {@link #asc()} or {@link #desc()}). */
   HistoricTaskInstanceQuery orderByTaskId();
   

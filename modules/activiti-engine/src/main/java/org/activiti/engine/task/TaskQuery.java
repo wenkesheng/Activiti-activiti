@@ -384,6 +384,11 @@ public interface TaskQuery extends Query<TaskQuery, Task>{
    */
   TaskQuery includeProcessVariables();
   
+  /**
+   * Limit task variables
+   */
+  TaskQuery limitTaskVariables(Integer taskVariablesLimit);
+  
   // ordering ////////////////////////////////////////////////////////////
   
   /** Order by task id (needs to be followed by {@link #asc()} or {@link #desc()}). */

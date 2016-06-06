@@ -217,4 +217,9 @@ public interface HistoricProcessInstanceQuery extends Query<HistoricProcessInsta
    * Include process variables in the process query result
    */
   HistoricProcessInstanceQuery includeProcessVariables();
+  
+  /**
+   * Limit process instance variables
+   */
+  HistoricProcessInstanceQuery limitProcessInstanceVariables(Integer processInstanceVariablesLimit);
 }

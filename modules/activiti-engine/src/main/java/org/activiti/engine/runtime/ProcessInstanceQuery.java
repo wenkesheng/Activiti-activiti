@@ -193,6 +193,11 @@ public interface ProcessInstanceQuery extends Query<ProcessInstanceQuery, Proces
    */
   ProcessInstanceQuery includeProcessVariables();
   
+  /**
+   * Limit process instance variables
+   */
+  ProcessInstanceQuery limitProcessInstanceVariables(Integer processInstanceVariablesLimit);
+  
   //ordering /////////////////////////////////////////////////////////////////
   
   /** Order by id (needs to be followed by {@link #asc()} or {@link #desc()}). */
