@@ -123,7 +123,7 @@ public class TaskEntityManager extends AbstractManager {
     int firstResult = taskQuery.getFirstResult();
     int maxResults = taskQuery.getMaxResults();
     
- // setting max results, limit to 20000 results for performance reasons
+    // setting max results, limit to 20000 results for performance reasons
     taskQuery.setMaxResults(20000);
     taskQuery.setFirstResult(0);
     
