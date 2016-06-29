@@ -8,7 +8,7 @@
   <artifactId>activiti-dbclean</artifactId>
 
   <packaging>pom</packaging>
-  <version>5.16.5</version>
+  <version>5.16.6</version>
 
   <dependencies>
     <dependency>
