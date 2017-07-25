@@ -16,9 +16,26 @@
 
 package org.activiti.services.query.app.dao;
 
+import com.querydsl.core.types.dsl.StringPath;
+import org.activiti.services.query.app.model.ProcessInstance;
+import org.activiti.services.query.app.model.QProcessInstance;
+import org.activiti.services.query.app.model.QVariable;
 import org.activiti.services.query.app.model.Variable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
+import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface VariableRepository extends CrudRepository<Variable, String>{
+public interface VariableRepository extends PagingAndSortingRepository<Variable, String> , QuerydslPredicateExecutor<Variable>, QuerydslBinderCustomizer<QVariable> {
 
+    @Override
+    default public void customize(QuerydslBindings bindings, QVariable root) {
+
+
+        bindings.bind(String.class).first(
+                (StringPath path, String value) -> path.containsIgnoreCase(value));
+
+    }
 }

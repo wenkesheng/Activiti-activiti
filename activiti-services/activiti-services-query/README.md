@@ -35,14 +35,15 @@ TODO: need examples of date restrictions, probably needs some config (https://st
 Process Instances currently can instead be queried using e.g. /query/processinstances?status=RUNNING&page=0&size=10&sort=lastModified,desc
 
 This is because the implementation for proc inst is instead based upon https://github.com/spring-projects/spring-data-examples/tree/master/web/querydsl
-Which is much the same as http://www.baeldung.com/rest-api-search-querydsl-web-in-spring-data-jpa
+Which is very similar to http://www.baeldung.com/rest-api-search-querydsl-web-in-spring-data-jpa
 
 This approach works with nested objects as can query for variables - so e.g. /query/processinstances?variables.name=bob does not match and /query/processinstances?variables.name=name does (provided 'name' is the name of a variable name)
 
 Seems it could be used for named queries http://dontpanic.42.nl/2011/06/spring-data-jpa-with-querydsl.html
 And date ranges https://stackoverflow.com/questions/35155824/can-spring-data-rests-querydsl-integration-be-used-to-perform-more-complex-quer
 
-Or if we wanted to do ranges with > and < we could do this - http://www.baeldung.com/rest-api-search-language-spring-data-querydsl but that means having to have ?search= in the uri
+Or if we wanted to do ranges with > and < we could do this - http://www.baeldung.com/rest-api-search-language-spring-data-querydsl but that means having to have ?search= in the uri.
+Also the pathbuilder stuff doesn't resolve associated collections like it will if the Q* classes are used (i.e. the configuration without pathbuilder).
 
 If the Q* classes aren't present in the /target/generated-sources directory then run mvn generate-sources from this project directory
 
@@ -51,6 +52,10 @@ If the Q* classes aren't present in the /target/generated-sources directory then
 OR should we use Elasticsearch?
 Boot2 supports latest elastic so maybe try an example but with boot2 dependencies e.g. https://www.mkyong.com/spring-boot/spring-boot-spring-data-elasticsearch-example/
 Presumably then the Elasticsearch searching and querying would be available - https://www.elastic.co/guide/en/elasticsearch/reference/current/_the_search_api.html
+
+## Or RSQL?
+
+The comment on here suggests RSQL would do JOINS as well as OR - https://github.com/jirutka/rsql-hibernate
 
 ## TODO Variables
 
