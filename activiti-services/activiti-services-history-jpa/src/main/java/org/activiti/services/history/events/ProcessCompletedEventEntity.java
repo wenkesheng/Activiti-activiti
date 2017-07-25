@@ -17,19 +17,19 @@
 
 package org.activiti.services.history.events;
 
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
+import org.activiti.services.history.converter.ProcessInstanceJpaJsonConverter;
 import org.activiti.services.model.ProcessInstance;
 
 @Entity
 @DiscriminatorValue(value = "ProcessCompletedEvent")
 public class ProcessCompletedEventEntity extends ProcessEngineEventEntity {
 
-    @Transient
+    @Convert(converter = ProcessInstanceJpaJsonConverter.class)
     private ProcessInstance processInstance;
-
 
     public ProcessCompletedEventEntity() {
     }

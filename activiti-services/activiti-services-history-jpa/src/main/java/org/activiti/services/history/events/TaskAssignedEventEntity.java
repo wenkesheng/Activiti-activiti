@@ -17,17 +17,18 @@
 
 package org.activiti.services.history.events;
 
+import javax.persistence.Convert;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
+import org.activiti.services.history.converter.TaskJpaJsonConverter;
 import org.activiti.services.model.Task;
 
 @Entity
 @DiscriminatorValue(value = "TaskAssignedEvent")
 public class TaskAssignedEventEntity extends ProcessEngineEventEntity {
 
-    @Transient
+    @Convert(converter = TaskJpaJsonConverter.class)
     private Task task;
 
     public TaskAssignedEventEntity() {

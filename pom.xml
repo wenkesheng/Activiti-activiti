@@ -20,6 +20,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <enforcer.failOnDuplicatedClasses>true</enforcer.failOnDuplicatedClasses>
     <jdk.version>1.8</jdk.version>
+
+    <!-- configuration properties for tests-->
+    <generated-assertions-folder>${project.build.directory}/generated-test-sources/assertions</generated-assertions-folder>
+    <generated-assertions-package>org.activiti.test</generated-assertions-package>
+
+
     <!-- JVM params for test execution -->
     <argLine>-Duser.language=en</argLine>
     <spring.boot.version>2.0.0.M2</spring.boot.version>
@@ -31,6 +37,7 @@
     <mockito.version>2.7.22</mockito.version>
     <junit.version>4.12</junit.version>
     <assertj.version>3.8.0</assertj.version>
+    <jsonunit.version>1.24.0</jsonunit.version>
     <el-api.version>2.2</el-api.version>
     <slf4j.version>1.7.6</slf4j.version>
     <hibernate.version>1.0.0.Final</hibernate.version>
@@ -78,6 +85,7 @@
     <querydsl.version>4.1.4</querydsl.version>
 
     <!-- plugins -->
+    <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
     <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>2.7.1</maven-surefire-plugin.version>
     <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
@@ -89,6 +97,7 @@
     <maven-failsafe-plugin.version>2.20</maven-failsafe-plugin.version>
     <maven-source-plugin.version>2.1.1</maven-source-plugin.version>
     <apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
+    <assertions-generator-plugin.version>2.0.0</assertions-generator-plugin.version>
   </properties>
 
   <repositories>
@@ -406,6 +415,12 @@
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.javacrumbs.json-unit</groupId>
+        <artifactId>json-unit-fluent</artifactId>
+        <version>${jsonunit.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -827,9 +842,19 @@
           </executions>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${build-helper-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${spring.boot.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.assertj</groupId>
+          <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+          <version>${assertions-generator-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>

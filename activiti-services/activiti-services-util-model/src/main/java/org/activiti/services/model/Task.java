@@ -17,9 +17,12 @@ package org.activiti.services.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
 
     private String id;
@@ -122,6 +125,7 @@ public class Task {
         this.processInstanceId = processInstanceId;
     }
 
+    @JsonIgnore
     public boolean isClaimed() {
         return assignee != null;
     }
