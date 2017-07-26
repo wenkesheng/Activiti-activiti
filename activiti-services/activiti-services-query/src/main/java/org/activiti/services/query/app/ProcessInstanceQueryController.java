@@ -16,9 +16,12 @@
 
 package org.activiti.services.query.app;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
 import org.activiti.services.query.app.assembler.ProcessInstanceQueryResourceAssembler;
 import org.activiti.services.query.app.model.ProcessInstance;
+import org.activiti.services.query.app.model.QProcessInstance;
 import org.activiti.services.query.app.predicates.ProcessInstancePredicatesBuilder;
 import org.activiti.services.query.app.resources.ProcessInstanceQueryResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,21 @@ public class ProcessInstanceQueryController {
     public PagedResources<ProcessInstanceQueryResource> findAllByWebQuerydsl(
             @QuerydslPredicate(root = ProcessInstance.class) Predicate predicate, Pageable pageable, PagedResourcesAssembler<ProcessInstance> pagedResourcesAssembler) {
         return pagedResourcesAssembler.toResource(dao.findAll(predicate,pageable), resourceAssembler);
+    }
+
+    //this shows that we can add an OR condition to a query with an extra parameter
+    @RequestMapping(method = RequestMethod.GET, value = "or")
+    @ResponseBody
+    public PagedResources<ProcessInstanceQueryResource> findAllByWebQuerydslWithOr(
+            @QuerydslPredicate(root = ProcessInstance.class) Predicate predicate, @RequestParam(value = "orStatus", required = false) String orStatus, Pageable pageable, PagedResourcesAssembler<ProcessInstance> pagedResourcesAssembler) {
+
+        //could maybe use ExpressionUtils.anyOf but BooleanBuilder is simpler - see http://www.querydsl.com/static/querydsl/3.2.0/apidocs/com/mysema/query/BooleanBuilder.html
+
+        BooleanBuilder builder = new BooleanBuilder();
+        QProcessInstance qProcessInstance = QProcessInstance.processInstance;
+
+
+        return pagedResourcesAssembler.toResource(dao.findAll(qProcessInstance.status.eq(orStatus).or(predicate),pageable), resourceAssembler);
     }
 
 

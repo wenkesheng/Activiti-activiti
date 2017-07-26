@@ -39,7 +39,7 @@ Which is very similar to http://www.baeldung.com/rest-api-search-querydsl-web-in
 
 This approach works with nested objects as can query for variables - so e.g. /query/processinstances?variables.name=bob does not match and /query/processinstances?variables.name=name does (provided 'name' is the name of a variable name)
 
-Seems it could be used for named queries http://dontpanic.42.nl/2011/06/spring-data-jpa-with-querydsl.html
+Seems it could be used for named/custom queries http://dontpanic.42.nl/2011/06/spring-data-jpa-with-querydsl.html and https://stackoverflow.com/questions/42486292/how-can-i-use-springs-pagination-using-pageable-while-writing-a-dynamic-query?rq=1
 And date ranges https://stackoverflow.com/questions/35155824/can-spring-data-rests-querydsl-integration-be-used-to-perform-more-complex-quer
 
 Or if we wanted to do ranges with > and < we could do this - http://www.baeldung.com/rest-api-search-language-spring-data-querydsl but that means having to have ?search= in the uri.
