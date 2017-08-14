@@ -15,6 +15,8 @@ public interface ProcessEngineChannels {
 
     String INTEGRATION_PRODUCER = "integrationProducer";
 
+    String INTEGRATION_CONSUMER = "integrationConsumer";
+
     @Input(COMMAND_CONSUMER)
     SubscribableChannel commandConsumer();
 
@@ -26,4 +28,7 @@ public interface ProcessEngineChannels {
 
     @Output(INTEGRATION_PRODUCER)
     MessageChannel integrationProducer();
+
+    @Input(INTEGRATION_CONSUMER)
+    SubscribableChannel integrationConsumer();
 }

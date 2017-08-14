@@ -23,7 +23,6 @@ package org.activiti.engine;
  * <li>
  * <b>{@link org.activiti.engine.TaskService}: </b> Exposes operations to manage human (standalone) {@link org.activiti.engine.task.Task}s, such as claiming, completing and assigning tasks</li>
  * <li>
- * <b>{@link org.activiti.engine.IdentityService}: </b> Used for managing {@link org.activiti.engine.identity.User}s, {@link org.activiti.engine.identity.Group}s and the relations between them<</li>
  * <li>
  * <b>{@link org.activiti.engine.ManagementService}: </b> Exposes engine admin and maintenance operations</li>
  * <li>
