@@ -24,7 +24,7 @@
     <module>activiti-services-identity-basic</module>
     <module>activiti-services-query</module>
     <module>activiti-services-audit</module>
-    <module>activiti-services-connector-hub</module>
+    <module>activiti-services-integrations</module>
   </modules>
 
 </project>
