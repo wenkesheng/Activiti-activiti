@@ -14,10 +14,9 @@
   <description>Activiti Services Query Parent</description>
   <packaging>pom</packaging>
 
-  <modules>
-    <module>activiti-services-query-model</module>
-    <module>activiti-services-query-repo</module>
-    <module>activiti-services-query-rest</module>
-  </modules>
 
+  <modules>
+  	<module>activiti-services-query-jpa</module>
+  	<module>activiti-services-query-elastic</module>
+  </modules>
 </project>
