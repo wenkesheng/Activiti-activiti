@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.activiti</groupId>
     <artifactId>activiti-root</artifactId>
-    <version>7.0.1</version>
+    <version>7.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>activiti-bpmn-converter</artifactId>
-  <name>Activiti :: BPMN Converter</name>
+  <artifactId>activiti-json-converter</artifactId>
+  <name>Activiti :: JSON Converter</name>
 
   <dependencies>
     <dependency>
@@ -19,13 +19,33 @@
     </dependency>
     <dependency>
       <groupId>org.activiti</groupId>
-      <artifactId>activiti-process-validation</artifactId>
+      <artifactId>activiti-bpmn-converter</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.activiti</groupId>
-      <artifactId>activiti-bpmn-layout</artifactId>
-      <scope>test</scope>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>math.geom2d</groupId>
+      <artifactId>javaGeom</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -36,36 +56,8 @@
       <artifactId>jcl-over-slf4j</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-    </dependency>
-    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
