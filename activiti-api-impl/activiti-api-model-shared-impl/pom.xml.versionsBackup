@@ -21,22 +21,18 @@
   <parent>
     <groupId>org.activiti</groupId>
     <artifactId>activiti-api-impl</artifactId>
-    <version>7.0.3</version>
+    <version>7.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>activiti-api-process-model-impl</artifactId>
-  <name>Activiti API :: Process Model Implementation</name>
+  <artifactId>activiti-api-model-shared-impl</artifactId>
+  <name>Activiti API :: Common Model Implementation</name>
   <dependencies>
     <dependency>
       <groupId>org.activiti.api</groupId>
       <artifactId>activiti-api-model-shared</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.activiti.api</groupId>
-      <artifactId>activiti-api-process-model</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.activiti</groupId>
-      <artifactId>activiti-api-model-shared-impl</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -44,19 +40,11 @@
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
+      <artifactId>jackson-annotations</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-autoconfigure</artifactId>
     </dependency>
   </dependencies>
 </project>
