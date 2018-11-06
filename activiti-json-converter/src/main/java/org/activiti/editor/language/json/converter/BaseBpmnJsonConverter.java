@@ -40,6 +40,7 @@ import org.activiti.bpmn.model.FormProperty;
 import org.activiti.bpmn.model.FormValue;
 import org.activiti.bpmn.model.Gateway;
 import org.activiti.bpmn.model.GraphicInfo;
+import org.activiti.bpmn.model.IOParameter;
 import org.activiti.bpmn.model.Lane;
 import org.activiti.bpmn.model.MessageEventDefinition;
 import org.activiti.bpmn.model.MessageFlow;
@@ -833,5 +834,33 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants,
             resultString = expressionBuilder.toString();
         }
         return resultString;
+    }
+
+    protected void addJsonParameters(String propertyName, String valueName, List<IOParameter> parameterList, ObjectNode propertiesNode) {
+        ObjectNode parametersNode = objectMapper.createObjectNode();
+        ArrayNode itemsNode = objectMapper.createArrayNode();
+        for (IOParameter parameter : parameterList) {
+            ObjectNode parameterItemNode = objectMapper.createObjectNode();
+            if (StringUtils.isNotEmpty(parameter.getSource())) {
+                parameterItemNode.put(PROPERTY_IOPARAMETER_SOURCE, parameter.getSource());
+            } else {
+                parameterItemNode.putNull(PROPERTY_IOPARAMETER_SOURCE);
+            }
+            if (StringUtils.isNotEmpty(parameter.getTarget())) {
+                parameterItemNode.put(PROPERTY_IOPARAMETER_TARGET, parameter.getTarget());
+            } else {
+                parameterItemNode.putNull(PROPERTY_IOPARAMETER_TARGET);
+            }
+            if (StringUtils.isNotEmpty(parameter.getSourceExpression())) {
+                parameterItemNode.put(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION, parameter.getSourceExpression());
+            } else {
+                parameterItemNode.putNull(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION);
+            }
+
+            itemsNode.add(parameterItemNode);
+        }
+
+        parametersNode.set(valueName, itemsNode);
+        propertiesNode.set(propertyName, parametersNode);
     }
 }

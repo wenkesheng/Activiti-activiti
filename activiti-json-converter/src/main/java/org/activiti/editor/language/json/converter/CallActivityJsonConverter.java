@@ -59,33 +59,6 @@ public class CallActivityJsonConverter extends BaseBpmnJsonConverter {
     addJsonParameters(PROPERTY_CALLACTIVITY_OUT, "outParameters", callActivity.getOutParameters(), propertiesNode);
   }
 
-  private void addJsonParameters(String propertyName, String valueName, List<IOParameter> parameterList, ObjectNode propertiesNode) {
-    ObjectNode parametersNode = objectMapper.createObjectNode();
-    ArrayNode itemsNode = objectMapper.createArrayNode();
-    for (IOParameter parameter : parameterList) {
-      ObjectNode parameterItemNode = objectMapper.createObjectNode();
-      if (StringUtils.isNotEmpty(parameter.getSource())) {
-        parameterItemNode.put(PROPERTY_IOPARAMETER_SOURCE, parameter.getSource());
-      } else {
-        parameterItemNode.putNull(PROPERTY_IOPARAMETER_SOURCE);
-      }
-      if (StringUtils.isNotEmpty(parameter.getTarget())) {
-        parameterItemNode.put(PROPERTY_IOPARAMETER_TARGET, parameter.getTarget());
-      } else {
-        parameterItemNode.putNull(PROPERTY_IOPARAMETER_TARGET);
-      }
-      if (StringUtils.isNotEmpty(parameter.getSourceExpression())) {
-        parameterItemNode.put(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION, parameter.getSourceExpression());
-      } else {
-        parameterItemNode.putNull(PROPERTY_IOPARAMETER_SOURCE_EXPRESSION);
-      }
-
-      itemsNode.add(parameterItemNode);
-    }
-
-    parametersNode.set(valueName, itemsNode);
-    propertiesNode.set(propertyName, parametersNode);
-  }
 
   protected FlowElement convertJsonToElement(JsonNode elementNode, JsonNode modelNode, Map<String, JsonNode> shapeMap) {
     CallActivity callActivity = new CallActivity();

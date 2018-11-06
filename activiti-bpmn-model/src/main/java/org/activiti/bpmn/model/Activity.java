@@ -23,9 +23,28 @@ public abstract class Activity extends FlowNode {
   protected IOSpecification ioSpecification;
   protected List<DataAssociation> dataInputAssociations = new ArrayList<DataAssociation>();
   protected List<DataAssociation> dataOutputAssociations = new ArrayList<DataAssociation>();
+  protected List<IOParameter> inParameters = new ArrayList<IOParameter>();
+  protected List<IOParameter> outParameters = new ArrayList<IOParameter>();
   protected List<BoundaryEvent> boundaryEvents = new ArrayList<BoundaryEvent>();
   protected String failedJobRetryTimeCycleValue;
   protected List<MapExceptionEntry> mapExceptions = new ArrayList<MapExceptionEntry>();
+
+  public List<IOParameter> getInParameters() {
+    return inParameters;
+  }
+
+  public void setInParameters(List<IOParameter> inParameters) {
+    this.inParameters = inParameters;
+  }
+
+  public List<IOParameter> getOutParameters() {
+    return outParameters;
+  }
+
+  public void setOutParameters(List<IOParameter> outParameters) {
+    this.outParameters = outParameters;
+  }
+
 
   public String getFailedJobRetryTimeCycleValue() {
     return failedJobRetryTimeCycleValue;
@@ -129,6 +148,24 @@ public abstract class Activity extends FlowNode {
     boundaryEvents.clear();
     for (BoundaryEvent event : otherActivity.getBoundaryEvents()) {
       boundaryEvents.add(event);
+    }
+  }
+
+  public void setValues(CallActivity otherElement) {
+    super.setValues(otherElement);
+
+    inParameters = new ArrayList<IOParameter>();
+    if (otherElement.getInParameters() != null && !otherElement.getInParameters().isEmpty()) {
+      for (IOParameter parameter : otherElement.getInParameters()) {
+        inParameters.add(parameter.clone());
+      }
+    }
+
+    outParameters = new ArrayList<IOParameter>();
+    if (otherElement.getOutParameters() != null && !otherElement.getOutParameters().isEmpty()) {
+      for (IOParameter parameter : otherElement.getOutParameters()) {
+        outParameters.add(parameter.clone());
+      }
     }
   }
 }

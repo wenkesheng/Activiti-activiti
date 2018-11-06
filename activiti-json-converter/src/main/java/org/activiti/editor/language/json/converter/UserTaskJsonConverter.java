@@ -61,6 +61,9 @@ public class UserTaskJsonConverter extends BaseBpmnJsonConverter implements Form
     UserTask userTask = (UserTask) baseElement;
     String assignee = userTask.getAssignee();
 
+    addJsonParameters(PROPERTY_CALLACTIVITY_IN, "inParameters", userTask.getInParameters(), propertiesNode);
+    addJsonParameters(PROPERTY_CALLACTIVITY_OUT, "outParameters", userTask.getOutParameters(), propertiesNode);
+
     if (StringUtils.isNotEmpty(assignee) || CollectionUtils.isNotEmpty(userTask.getCandidateUsers()) || CollectionUtils.isNotEmpty(userTask.getCandidateGroups())) {
 
       ObjectNode assignmentNode = objectMapper.createObjectNode();

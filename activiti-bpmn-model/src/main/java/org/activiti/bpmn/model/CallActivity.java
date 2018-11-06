@@ -19,8 +19,6 @@ public class CallActivity extends Activity {
 
   protected String calledElement;
   protected boolean inheritVariables;
-  protected List<IOParameter> inParameters = new ArrayList<IOParameter>();
-  protected List<IOParameter> outParameters = new ArrayList<IOParameter>();
   protected String businessKey;
   protected boolean inheritBusinessKey;
 
@@ -38,22 +36,6 @@ public class CallActivity extends Activity {
 
   public void setInheritVariables(boolean inheritVariables) {
     this.inheritVariables = inheritVariables;
-  }
-
-  public List<IOParameter> getInParameters() {
-    return inParameters;
-  }
-
-  public void setInParameters(List<IOParameter> inParameters) {
-    this.inParameters = inParameters;
-  }
-
-  public List<IOParameter> getOutParameters() {
-    return outParameters;
-  }
-
-  public void setOutParameters(List<IOParameter> outParameters) {
-    this.outParameters = outParameters;
   }
 
   public String getBusinessKey() {
@@ -84,18 +66,5 @@ public class CallActivity extends Activity {
     setBusinessKey(otherElement.getBusinessKey());
     setInheritBusinessKey(otherElement.isInheritBusinessKey());
 
-    inParameters = new ArrayList<IOParameter>();
-    if (otherElement.getInParameters() != null && !otherElement.getInParameters().isEmpty()) {
-      for (IOParameter parameter : otherElement.getInParameters()) {
-        inParameters.add(parameter.clone());
-      }
-    }
-
-    outParameters = new ArrayList<IOParameter>();
-    if (otherElement.getOutParameters() != null && !otherElement.getOutParameters().isEmpty()) {
-      for (IOParameter parameter : otherElement.getOutParameters()) {
-        outParameters.add(parameter.clone());
-      }
-    }
   }
 }
