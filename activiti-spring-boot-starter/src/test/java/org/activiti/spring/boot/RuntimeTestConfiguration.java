@@ -21,6 +21,7 @@ import org.activiti.api.task.runtime.events.TaskCreatedEvent;
 import org.activiti.api.task.runtime.events.TaskUpdatedEvent;
 import org.activiti.api.task.runtime.events.listener.TaskRuntimeEventListener;
 import org.activiti.core.common.spring.identity.ExtendedInMemoryUserDetailsManager;
+import org.activiti.spring.boot.process.DeployedProcessesListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -90,6 +91,11 @@ public class RuntimeTestConfiguration {
                 deanAuthorities));
 
         return extendedInMemoryUserDetailsManager;
+    }
+
+    @Bean
+    public DeployedProcessesListener deployedProcessesListener(){
+        return new DeployedProcessesListener();
     }
 
     @Bean

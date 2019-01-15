@@ -26,8 +26,7 @@ import org.springframework.context.annotation.Configuration;
  * as required.
  */
 @Configuration
-@ComponentScan("org.activiti")
-
+@ConditionalOnClass (name = "org.springframework.boot.actuate.endpoint.AbstractEndpoint")
 public class EndpointAutoConfiguration {
 
     @Bean
