@@ -28,13 +28,16 @@ import org.activiti.api.task.runtime.events.TaskCreatedEvent;
 import org.activiti.api.task.runtime.events.TaskSuspendedEvent;
 import org.activiti.api.task.runtime.events.TaskUpdatedEvent;
 import org.activiti.api.task.runtime.events.listener.TaskEventListener;
+import org.activiti.spring.conformance.util.RuntimeTestConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
+@Import(RuntimeTestConfiguration.class)
 public class Set1RuntimeTestConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Set1RuntimeTestConfiguration.class);

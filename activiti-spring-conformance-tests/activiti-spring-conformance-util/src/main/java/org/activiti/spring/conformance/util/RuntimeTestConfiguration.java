@@ -2,10 +2,12 @@ package org.activiti.spring.conformance.util;
 
 import org.activiti.api.model.shared.event.RuntimeEvent;
 import org.activiti.core.common.spring.identity.ExtendedInMemoryUserDetailsManager;
+import org.activiti.spring.conformance.util.security.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@Import(SecurityUtil.class)
 public class RuntimeTestConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RuntimeTestConfiguration.class);

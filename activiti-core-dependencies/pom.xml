@@ -15,7 +15,7 @@
       <dependency>
         <groupId>org.activiti.api</groupId>
         <artifactId>activiti-api-dependencies</artifactId>
-        <version>7.0.0-SNAPSHOT</version>
+        <version>${activiti-api.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

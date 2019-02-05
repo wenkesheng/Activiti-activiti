@@ -14,15 +14,18 @@ import org.activiti.api.process.runtime.events.listener.ProcessRuntimeEventListe
 import org.activiti.api.runtime.shared.events.VariableEventListener;
 import org.activiti.api.task.runtime.events.*;
 import org.activiti.api.task.runtime.events.listener.TaskEventListener;
+import org.activiti.spring.conformance.util.RuntimeTestConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@Import(RuntimeTestConfiguration.class)
 public class Set3RuntimeTestConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Set3RuntimeTestConfiguration.class);

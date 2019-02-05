@@ -16,10 +16,12 @@ import org.activiti.api.runtime.shared.events.VariableEventListener;
 import org.activiti.api.task.runtime.events.*;
 import org.activiti.api.task.runtime.events.listener.TaskEventListener;
 import org.activiti.core.common.spring.identity.ExtendedInMemoryUserDetailsManager;
+import org.activiti.spring.conformance.util.RuntimeTestConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@Import(RuntimeTestConfiguration.class)
 public class Set2RuntimeTestConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Set2RuntimeTestConfiguration.class);
